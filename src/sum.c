@@ -8,7 +8,6 @@ int sum(int a[], int n) {
         return 0;
     }
     // Recursive step
-
     else {
         return a[n - 1] + sum(a, n - 1);
     }
