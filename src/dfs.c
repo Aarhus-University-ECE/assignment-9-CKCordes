@@ -9,27 +9,33 @@
 #include <stdlib.h>  /* abort */
 
 void DFT(node *root) {
+    // If the current is non exisitant "pop" it in the call stack and go back
     if (root == NULL) {
         return;
     }
-
+    // Printing the current node
     print_node(root);
-
+    // Going all the way to the left leaf
     DFT(root->lchild);
-
+    // Going to the right leaf
     DFT(root->rchild);
 }
 
 node *make_node(int num, node *left, node *right) {
+    // Allocating memory for the new node
     node *n = (node *)malloc(sizeof(node));
+    // Assigning the values for the new node
     n->num = num;
     n->visited = false;
     n->lchild = left;
     n->rchild = right;
+    // returning the node
     return n;
 }
 
 void free_node(node *p) {
+    // Not used in the code
+    // Freeing the node and all of its small branches using recursion
     if (p->lchild == NULL && p->rchild == NULL) {
         free(p);
     } else if (p->lchild != NULL) {
@@ -63,23 +69,29 @@ void print_tree(node *p, int depth) {
 }
 
 stack *push(stack *topp, node *node) {
+    // Not used in the code
+    // Allocating memory for the new element in stack
     stack *element = malloc(sizeof(stack));
+    // Assigning the values to the stack element
     element->node = node;
     element->next = topp;
+    // Returning the new element to the stack
     return element;
 }
 
 bool isEmpty(stack *topp) {
+    // not used in the code
+    // Lokal triviel
     if (topp == NULL) {
-        printf("true");
         return true;
     } else {
-        printf("false");
         return false;
     }
 }
 
 node *top(stack *topp) {
+    // Not used in the code
+    // Lokal triviel
     node *topNode = topp->node;
     return topNode;
 }
@@ -88,6 +100,8 @@ node *top(stack *topp) {
 // element from the stack
 
 stack *pop(stack *topp) {
+    // Not used in the code
+    // Lokal triviel
     stack *temp = topp;
     topp = topp->next;
     free(temp);
