@@ -3,10 +3,13 @@
 #include <assert.h>
 
 int sum(int a[], int n) {
-    // assert(n >= 0);
+    // Base case
     if (n == 0) {
         return 0;
-    } else {
+    }
+    // Recursive step
+
+    else {
         return a[n - 1] + sum(a, n - 1);
     }
 }
