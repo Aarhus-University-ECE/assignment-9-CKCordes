@@ -2,97 +2,109 @@
  * Search an expression using DFS.
  */
 
-#include <stdio.h>		/* scanf, printf */
-#include <stdlib.h>		/* abort */
-#include <stdbool.h>		/* bool, true, false */
 #include "dfs.h"
 
+#include <stdbool.h> /* bool, true, false */
+#include <stdio.h>   /* scanf, printf */
+#include <stdlib.h>  /* abort */
 
-void DFT (node * root)
-{
-	// Implement DFS
-	// Hint: You can use print_node, print_tree and/or print_stack.
-}
-
-node *make_node (int num, node * left, node * right)
-{
-	return 0;
-}
-
-void free_node (node * p)
-{
-	
-}
-
-
-void print_node (node * p)
-{
-
-  if (p == NULL)
-    printf ("NULL\n");
-  else
-    printf ("%d", p->num);
-}
-
-
-void print_tree (node * p, int depth)
-{
-  for (int i = 0; i < depth; i = i + 1)
-    printf (" ");
-  printf ("| ");
-
-  if (p == NULL)
-    printf ("NULL\n");
-  else
-    printf ("[%d]\n", p->num);
-
-
-  if (p->lchild)
-    {
-      print_tree (p->lchild, depth + 1);
+void DFT(node *root) {
+    if (root == NULL) {
+        return;
     }
 
-  if (p->rchild)
-    print_tree (p->rchild, depth + 1);
+    print_node(root);
+
+    DFT(root->lchild);
+
+    DFT(root->rchild);
 }
 
-stack *push (stack * topp, node * node)
-{
-	return 0;
+node *make_node(int num, node *left, node *right) {
+    node *n = (node *)malloc(sizeof(node));
+    n->num = num;
+    n->visited = false;
+    n->lchild = left;
+    n->rchild = right;
+    return n;
 }
 
-bool isEmpty (stack * topp)
-{
-  return false;
+void free_node(node *p) {
+    if (p->lchild == NULL && p->rchild == NULL) {
+        free(p);
+    } else if (p->lchild != NULL) {
+        free(p->lchild);
+    } else if (p->rchild != NULL) {
+        free(p->rchild);
+    }
 }
 
-node *top (stack * topp)
-{
-	return 0;
+void print_node(node *p) {
+    if (p == NULL)
+        printf("NULL\n");
+    else
+        printf("%d, ", p->num);
 }
 
-// Utility function to pop topp  
-// element from the stack 
+void print_tree(node *p, int depth) {
+    for (int i = 0; i < depth; i = i + 1) printf(" ");
+    printf("| ");
 
-stack *pop (stack * topp)
-{
-	return 0;
-}
+    if (p == NULL)
+        printf("NULL\n");
+    else
+        printf("[%d]\n", p->num);
 
-void print_stack (stack * topp)
-{
-  struct stack *temp = topp;
-
-  while (temp != NULL)
-    {
-
-      print_node (temp->node);
-      printf ("\n");
-
-      temp = temp->next;
+    if (p->lchild) {
+        print_tree(p->lchild, depth + 1);
     }
 
-  printf ("====\n");
+    if (p->rchild) print_tree(p->rchild, depth + 1);
+}
 
-  return;
+stack *push(stack *topp, node *node) {
+    stack *element = malloc(sizeof(stack));
+    element->node = node;
+    element->next = topp;
+    return element;
+}
+
+bool isEmpty(stack *topp) {
+    if (topp == NULL) {
+        printf("true");
+        return true;
+    } else {
+        printf("false");
+        return false;
+    }
+}
+
+node *top(stack *topp) {
+    node *topNode = topp->node;
+    return topNode;
+}
+
+// Utility function to pop topp
+// element from the stack
+
+stack *pop(stack *topp) {
+    stack *temp = topp;
+    topp = topp->next;
+    free(temp);
+    return topp;
+}
+
+void print_stack(stack *topp) {
+    struct stack *temp = topp;
+
+    while (temp != NULL) {
+        print_node(temp->node);
+        printf("\n");
+
+        temp = temp->next;
+    }
+
+    printf("====\n");
+
+    return;
 }
